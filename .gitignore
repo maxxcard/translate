@@ -1,5 +1,7 @@
 vendor/
-composer.lock
 var/*
-
 .idea/
+testfolder/
+testoutput/
+
+composer.lock

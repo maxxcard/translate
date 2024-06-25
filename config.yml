@@ -1,4 +1,10 @@
 path: '/home/root'
 
+# Caminho absoluto de onde os arquivos serão salvos
+# exemplo:
+# output: /home/maxxti/Projects/translater/testoutput
+output: /home/maxxti/Projects/translater/testoutput
+
+# caminho absoluto de onde serão buscados os arquivos
 directories:
-  -
+#  - /home/maxxti/Projects/translater/testfolder

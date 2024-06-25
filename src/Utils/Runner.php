@@ -29,7 +29,10 @@ readonly class Runner
             $now = (new \DateTimeImmutable())->format('Y-m-d H:i:s');
             $this->logger->log->info(sprintf('Task of %s successfuly executed at %s', $toExecute, $now));
         } catch (\Throwable $e) {
-            $this->logger->info($e->getMessage());
+            $this->logger->info($e->getMessage(), [
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+            ]);
         }
     }
 }
