@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace Tests\Actions;
 
 use App\Actions\Aux\Config;
-use App\Actions\Aux\InfoxToResomaq;
 use App\Actions\Aux\InfoxToResomaqFile;
+use App\Actions\Aux\RegisterTransaction;
 use App\Actions\TranslateHabilitationFiles;
 use App\Utils\DirectoryIteratorFactory;
-use App\Utils\RegisterTransaction;
 use App\Utils\WriteFile;
 use DirectoryIterator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
-use SplFileInfo;
 
 class TranslateHabilitationFilesTest extends TestCase
 {

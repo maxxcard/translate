@@ -6,9 +6,9 @@ namespace App\Actions;
 
 use App\Actions\Aux\Config;
 use App\Actions\Aux\InfoxToResomaqFile;
+use App\Actions\Aux\RegisterTransaction;
 use App\Taskable;
 use App\Utils\DirectoryIteratorFactory;
-use App\Utils\RegisterTransaction;
 use App\Utils\WriteFile;
 
 readonly class TranslateHabilitationFiles implements Taskable
