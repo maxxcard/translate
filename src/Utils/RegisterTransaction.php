@@ -46,7 +46,7 @@ EOL;
         $prepare = $conn->prepare(self::EXISTS);
         $prepare->execute([$convertedFromFileName]);
 
-        return $prepare->rowCount() !== 0;
+        return count($prepare->fetchAll(\PDO::FETCH_ASSOC)) !== 0;
     }
 
     private function connection(): \PDO

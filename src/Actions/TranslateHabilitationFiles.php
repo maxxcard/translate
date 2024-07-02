@@ -9,6 +9,7 @@ use App\Actions\Aux\InfoxToResomaqFile;
 use App\Taskable;
 use App\Utils\DirectoryIteratorFactory;
 use App\Utils\RegisterTransaction;
+use App\Utils\WriteFile;
 
 readonly class TranslateHabilitationFiles implements Taskable
 {
@@ -16,8 +17,10 @@ readonly class TranslateHabilitationFiles implements Taskable
         private InfoxToResomaqFile       $infoxToResomaqFile,
         private Config                   $config,
         private DirectoryIteratorFactory $directoryIteratorFactory,
-        private RegisterTransaction $registerTransaction,
-    ) {
+        private RegisterTransaction      $registerTransaction,
+        private WriteFile                $writeFile,
+    )
+    {
     }
 
     public function execute(): void
@@ -25,7 +28,7 @@ readonly class TranslateHabilitationFiles implements Taskable
         $paths = $this->config->getConfig('directories');
         foreach ($paths as $path => $destination) {
             $listOfFilesOnPath = $this->listFiles($path);
-            array_map(fn (\SplFileObject $file) => $this->executeAction($file, $destination), $listOfFilesOnPath);
+            array_map(fn(\SplFileObject $file) => $this->executeAction($file, $destination), $listOfFilesOnPath);
         }
     }
 
@@ -51,20 +54,14 @@ readonly class TranslateHabilitationFiles implements Taskable
 
     private function executeAction(\SplFileObject $file, string $destination): void
     {
-        if ($this->registerTransaction->transactionExists($file->getPathname())) {
+        if ($this->registerTransaction->transactionExists($file->getFilename())) {
             return;
         }
 
         $createdFileContent = $this->infoxToResomaqFile->execute($file);
         $fileName = $this->resomaqFileName($file->getFilename());
-        $this->writeFile($createdFileContent, sprintf('%s/%s', $destination, $fileName));
+        $this->writeFile->write(sprintf('%s/%s', $destination, $fileName), $createdFileContent);
         $this->registerTransaction->create($fileName, $file->getFilename());
-    }
-
-    private function writeFile(string $content, string $path): void
-    {
-        $newFile = new \SplFileObject($path, 'w');
-        $newFile->fwrite($content);
     }
 
     private function resomaqFileName(string $fileName): string
