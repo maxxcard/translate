@@ -8,6 +8,7 @@ use App\Actions\Aux\Config;
 use App\Actions\Aux\InfoxToResomaqFile;
 use App\Taskable;
 use App\Utils\DirectoryIteratorFactory;
+use App\Utils\RegisterTransaction;
 
 readonly class TranslateHabilitationFiles implements Taskable
 {
@@ -15,24 +16,20 @@ readonly class TranslateHabilitationFiles implements Taskable
         private InfoxToResomaqFile       $infoxToResomaqFile,
         private Config                   $config,
         private DirectoryIteratorFactory $directoryIteratorFactory,
+        private RegisterTransaction $registerTransaction,
     ) {
     }
 
     public function execute(): void
     {
         $paths = $this->config->getConfig('directories');
-        $outputPath = $this->config->getConfig('output');
-        foreach ($paths as $path) {
+        foreach ($paths as $path => $destination) {
             $listOfFilesOnPath = $this->listFiles($path);
-            array_map(
-                fn (\SplFileObject $file) => $this->createTranslatedFile($file, $outputPath),
-                $listOfFilesOnPath
-            );
+            array_map(fn (\SplFileObject $file) => $this->executeAction($file, $destination), $listOfFilesOnPath);
         }
     }
 
     /**
-     * @param string $dir
      * @return array<int, \SplFileObject>
      */
     private function listFiles(string $dir): array
@@ -40,8 +37,9 @@ readonly class TranslateHabilitationFiles implements Taskable
         $iterator = $this->directoryIteratorFactory->instantiate($dir);
         /** @var array<int, \SplFileObject> $files */
         $files = [];
+
         foreach ($iterator as $file) {
-            if (!$file->isFile()) {
+            if (!$file->isFile() || $file->getExtension() !== 'TXT') {
                 continue;
             }
 
@@ -51,17 +49,26 @@ readonly class TranslateHabilitationFiles implements Taskable
         return $files;
     }
 
-    private function createTranslatedFile(\SplFileObject $file, string $outputPath): void
+    private function executeAction(\SplFileObject $file, string $destination): void
     {
+        if ($this->registerTransaction->transactionExists($file->getPathname())) {
+            return;
+        }
+
+        $createdFileContent = $this->infoxToResomaqFile->execute($file);
         $fileName = $this->resomaqFileName($file->getFilename());
-        $output = $this->infoxToResomaqFile->execute($file);
-        $newFile = new \SplFileObject(sprintf('%s/%s', $outputPath, $fileName), 'w');
-        $newFile->fwrite($output);
+        $this->writeFile($createdFileContent, sprintf('%s/%s', $destination, $fileName));
+        $this->registerTransaction->create($fileName, $file->getFilename());
+    }
+
+    private function writeFile(string $content, string $path): void
+    {
+        $newFile = new \SplFileObject($path, 'w');
+        $newFile->fwrite($content);
     }
 
     private function resomaqFileName(string $fileName): string
     {
-        // INFOX-HAB_MAX_ENV_20240509160001
         $fileNameWithoutExtension = str_replace(['.txt', '.TXT'], '', $fileName);
         $dateAndHour = substr($fileNameWithoutExtension, 18);
         $resomaqFileName = $dateAndHour . 'HC';

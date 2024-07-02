@@ -80,17 +80,12 @@ class InfoxToResomaq
         return substr($cnpjCpf, 33, 14);
     }
 
-    /**
-     * @param string $infoxData
-     * @return string
-     */
     private function habitation(string $infoxData): string
     {
         $habitation = $infoxData[56] === '1' ? 'H' : 'D';
         $cieloCode = substr($infoxData, 17, 15);
         $habitationCode = sprintf('02%s', $habitation);
         $habitationCode .= $cieloCode;
-
 
         return $habitationCode;
     }

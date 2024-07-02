@@ -1,4 +1,4 @@
-db_path: /Users/andre/Projects/maxxcard/translate
+db_path: path/to/db
 
 # Caminho de origem e destino dos arquivos dos arquivos, o primeiro item é onde os arquivos serão buscados o segundo é
 # onde os arquivos convertidos serão salvos.

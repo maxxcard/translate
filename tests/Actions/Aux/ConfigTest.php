@@ -33,4 +33,16 @@ class ConfigTest extends TestCase
         // assert
         $this->assertSame(['item1', 'item2', 'item3'], $actual);
     }
+
+    public function testWithDestinationMatrix(): void
+    {
+        // act
+        $actual = $this->config->getConfig('directory');
+
+        // assert
+        $this->assertSame(
+            ['item1' => 'item2', 'item3' => 'item4'],
+            $actual
+        );
+    }
 }

@@ -5,6 +5,7 @@ list:
   - item3
 
 directory:
-  -
+  item1: item2
+  item3: item4
 
 output: /tmp

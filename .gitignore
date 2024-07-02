@@ -4,4 +4,7 @@ var/*
 testfolder/
 testoutput/
 
+config.yml
+db.db
+
 composer.lock
