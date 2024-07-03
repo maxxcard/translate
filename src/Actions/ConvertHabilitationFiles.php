@@ -18,7 +18,7 @@ readonly class ConvertHabilitationFiles implements Taskable
         private Config                   $config,
         private DirectoryIteratorFactory $directoryIteratorFactory,
         private RegisterTransaction      $registerTransaction,
-        private Local                $writeFile,
+        private Local                    $writeFile,
     )
     {
     }

@@ -9,18 +9,20 @@ class InfoxToResomaq
     public function head(string $infoxHeadText): string
     {
         $splitInfoxString = $this->splitInfoxString($infoxHeadText);
-        $head = '0';
-        $head .= '000006'; // TODO: verificar esse numero
-        $head .= substr($splitInfoxString[1], 0, 8);
-        $head .= '509041'; // TODO: verificar se este bin está correto
+        $head = '0000001';
+        $head .= substr($splitInfoxString[1], 0, 8); // data
+        $head .= '509041'; // numero do bin TODO: verificar se este bin está correto
         $head .= 'Redecompras HC 2.1';
 
         return $head;
     }
 
-    public function footer(): string
+    public function trailer(int $numerOfRegisters): string
     {
-        return sprintf('9%s', '000006');
+        $numberLength = strlen((string) $numerOfRegisters); // TODO: a quantidade de linhas deve ser a quantidade total de linhas do arquivo ou a quantidade de linhas com informações para habilitação
+        $text = sprintf('%s%s', str_repeat('0', 6 - $numberLength), $numerOfRegisters);
+
+        return sprintf('9%s', $text);
     }
 
     public function bodyLine(string $infoxString): string

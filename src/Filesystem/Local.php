@@ -20,7 +20,7 @@ class Local
 
     private function filesystem(): Filesystem
     {
-        $adapter = new LocalFilesystemAdapter(__DIR__);
+        $adapter = new LocalFilesystemAdapter('/');
 
         return new Filesystem($adapter);
     }

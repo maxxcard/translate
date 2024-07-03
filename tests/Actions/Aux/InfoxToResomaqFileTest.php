@@ -34,17 +34,17 @@ class InfoxToResomaqFileTest extends TestCase
             [
                 new \SplFileObject(__DIR__ . '/../../artifacts/input.txt', 'rb'),
                 <<<EOT
-                000000620240509509041Redecompras HC 2.1
+                000000120240509509041Redecompras HC 2.1
                 100000293209765064271XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXX 000000000000000000000000                              XXXXXXXXXXX@XXXXXXXXX.XXX                                   XXXXXXXXXXXXXXXXXXXXXXXX, 9999                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXX XX02H000002808453455
-                9000006
+                9000002
                 EOT
             ],
             [
                 new \SplFileObject(__DIR__ . '/../../artifacts/input_with_blank_lines.txt', 'rb'),
                 <<<EOT
-                000000620240509509041Redecompras HC 2.1
+                000000120240509509041Redecompras HC 2.1
                 100000293209765064271XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXX 000000000000000000000000                              XXXXXXXXXXX@XXXXXXXXX.XXX                                   XXXXXXXXXXXXXXXXXXXXXXXX, 9999                    XXXXXXXXXXXXXXXXXXXXXXXXXXXXX XXXXXXXXXXXXXXXXXXXXXXXXXXXXX XX02H000002808453455
-                9000006
+                9000002
                 EOT
             ]
         ];

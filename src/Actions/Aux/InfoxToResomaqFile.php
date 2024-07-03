@@ -32,7 +32,7 @@ class InfoxToResomaqFile
             }
 
             if ($index === $lastLineIndex) {
-                $output .= $this->infoxToResomaq->footer();
+                $output .= $this->infoxToResomaq->trailer($index);
                 continue;
             }
 

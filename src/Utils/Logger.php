@@ -11,6 +11,7 @@ use Monolog\Logger as MonoLogger;
 readonly class Logger
 {
     public MonoLogger $log;
+    
     public function __construct()
     {
         $this->log = new MonoLogger('converter');

@@ -7,11 +7,11 @@ namespace App\Utils;
 use Crunz\Event;
 use Crunz\Schedule;
 
-class Task
+readonly class Task
 {
-    public readonly Schedule $schedule;
+    public Schedule $schedule;
 
-    private function __construct(private readonly string $taskClass)
+    private function __construct(private string $taskClass)
     {
         $this->schedule = new Schedule();
     }

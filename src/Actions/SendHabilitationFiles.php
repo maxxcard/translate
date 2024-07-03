@@ -7,9 +7,9 @@ namespace App\Actions;
 use App\Actions\Aux\Config;
 use App\Taskable;
 
-class SendHabilitationFiles implements Taskable
+readonly class SendHabilitationFiles implements Taskable
 {
-    public function __construct(private readonly Config $config) {}
+    public function __construct(private Config $config) {}
 
     public function execute(): void
     {
