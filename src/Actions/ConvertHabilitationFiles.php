@@ -7,18 +7,18 @@ namespace App\Actions;
 use App\Actions\Aux\Config;
 use App\Actions\Aux\InfoxToResomaqFile;
 use App\Actions\Aux\RegisterTransaction;
+use App\Filesystem\Local;
 use App\Taskable;
 use App\Utils\DirectoryIteratorFactory;
-use App\Utils\WriteFile;
 
-readonly class TranslateHabilitationFiles implements Taskable
+readonly class ConvertHabilitationFiles implements Taskable
 {
     public function __construct(
         private InfoxToResomaqFile       $infoxToResomaqFile,
         private Config                   $config,
         private DirectoryIteratorFactory $directoryIteratorFactory,
         private RegisterTransaction      $registerTransaction,
-        private WriteFile                $writeFile,
+        private Local                $writeFile,
     )
     {
     }

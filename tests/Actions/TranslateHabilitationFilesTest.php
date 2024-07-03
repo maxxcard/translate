@@ -7,16 +7,16 @@ namespace Tests\Actions;
 use App\Actions\Aux\Config;
 use App\Actions\Aux\InfoxToResomaqFile;
 use App\Actions\Aux\RegisterTransaction;
-use App\Actions\TranslateHabilitationFiles;
+use App\Actions\ConvertHabilitationFiles;
+use App\Filesystem\Local;
 use App\Utils\DirectoryIteratorFactory;
-use App\Utils\WriteFile;
 use DirectoryIterator;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
 class TranslateHabilitationFilesTest extends TestCase
 {
-    private TranslateHabilitationFiles $translateHabilitationFiles;
+    private ConvertHabilitationFiles $translateHabilitationFiles;
 
     private InfoxToResomaqFile&MockObject $infoxToResomaqFileMock;
 
@@ -26,16 +26,16 @@ class TranslateHabilitationFilesTest extends TestCase
 
     private RegisterTransaction&MockObject $registerTransactionMock;
 
-    private WriteFile&MockObject $writeFileMock;
+    private Local&MockObject $writeFileMock;
 
     protected function setUp(): void
     {
-        $this->translateHabilitationFiles = new TranslateHabilitationFiles(
+        $this->translateHabilitationFiles = new ConvertHabilitationFiles(
             $this->infoxToResomaqFileMock = $this->createMock(InfoxToResomaqFile::class),
             $this->configMock = $this->createMock(Config::class),
             $this->directoryIteratorFactoryMock = $this->createMock(DirectoryIteratorFactory::class),
             $this->registerTransactionMock = $this->createMock(RegisterTransaction::class),
-            $this->writeFileMock = $this->createMock(WriteFile::class)
+            $this->writeFileMock = $this->createMock(Local::class)
         );
     }
 
